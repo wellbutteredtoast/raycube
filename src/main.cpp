@@ -3,6 +3,23 @@
 
 #define GLSL_VERSION 330
 
+
+/**
+ * Implement this later, right now I only have the one shader working
+ * Changing manually is mid, so after this I should make these interchangable
+ * 
+ * I love GLSL shaders... so much... bleh
+ * I'll learn to love these things eventually :P
+ */
+typedef enum ShaderTypes {
+    CHECKERBOARD,
+    CYCLING,
+    GRADIENT,
+    NOISE,
+    PIXELATE,
+    SOLID,
+};
+
 int main(void) {
     // =============================================
     // SETUP OF RAYLIB
@@ -47,12 +64,12 @@ int main(void) {
         if (IsKeyDown(KEY_UP)) cubePosition.z -= moveSpeed;
         if (IsKeyDown(KEY_DOWN)) cubePosition.z += moveSpeed;
 
-        // Pixel size adjustment
+        // Pixel size adjustment shenanigans
         if (IsKeyDown(KEY_W)) pixelSize += 0.1f;
         if (IsKeyDown(KEY_S)) pixelSize -= 0.1f;
         if (pixelSize < 1.0f) pixelSize = 1.0f;
 
-        // Draw scene to texture
+        // Draw scene to texture (this is pretty important)
         BeginTextureMode(target);
             ClearBackground(RAYWHITE);
             BeginMode3D(camera);
@@ -63,7 +80,7 @@ int main(void) {
             DrawText("Use W/S to adjust pixelation!", 10, 40, 20, DARKGRAY);
         EndTextureMode();
 
-        // Apply shader and draw to screen
+        // Apply shader and draw to screen (also important)
         BeginDrawing();
             ClearBackground(RAYWHITE);
             BeginShaderMode(shader);
